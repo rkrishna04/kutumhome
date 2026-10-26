@@ -41,7 +41,18 @@
   .evt-tab-panel { display: none; }
   .evt-tab-panel.active { display: block; }
 </style>
-</head>
+<style>
+.evt-tabs{border-bottom-color:#e2e8f0;gap:8px;padding-bottom:10px}
+.evt-tab-btn{background:#fff;border:1px solid #dbe4eb;color:#475569;border-radius:8px;box-shadow:none}
+.evt-tab-btn.active{background:#e8f3f0;border-color:#b7d8ce;color:#194b44;box-shadow:inset 0 -2px #256359}
+.evt-tab-panel .card{background:#fff;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(15,23,42,.035)}
+.evt-tab-panel .card-title,.evt-tab-panel th,.evt-tab-panel td{color:#172b4d}
+.evt-tab-panel .toolbar{gap:10px}#events-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))!important}
+.evt-tab-panel .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.evt-tab-panel table{min-width:720px}
+.evt-tab-panel th{background:#f8fafc}.evt-tab-panel td,.evt-tab-panel th{border-bottom:1px solid #edf1f5}
+@media(max-width:640px){.evt-tabs{margin-left:-2px;margin-right:-2px}.evt-tab-btn{white-space:normal;flex:0 0 auto;max-width:80vw}
+.evt-tab-panel .card{padding:14px!important}.evt-tab-panel .card-header>div{min-width:0;flex-wrap:wrap}.evt-tab-panel .card-header button{min-height:42px}}
+</style></head>
 <body>
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
