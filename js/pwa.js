@@ -1,5 +1,5 @@
 /* ============================================================
-   js/pwa.js — SHIVAM DUPLEX Society
+   js/pwa.js — Kutumhome Society
    3D Celestial Holographic Shiva Loader & Direct PWA App Engine
    ============================================================ */
 
@@ -204,16 +204,16 @@ window.addEventListener('beforeinstallprompt', (e) => {
         <div class="shiva-card-top-glow"></div>
         <div class="shiva-card-body">
           <div class="shiva-app-badge">
-            <img src="icons/icon-192.png" alt="SHIVAM App Icon" onerror="this.src='icons/icon-96.png'"/>
+            <img src="icons/icon-192.png" alt="Kutumhome App Icon" onerror="this.src='icons/icon-96.png'"/>
             <div class="shiva-app-badge-title">
-              <h4>SHIVAM DUPLEX App</h4>
-              <p>⭐⭐⭐⭐⭐ Direct Mobile Portal</p>
+              <h4>Kutumhome App</h4>
+              <p>⭐⭐⭐⭐⭐ Resident & Society Portal</p>
             </div>
           </div>
 
           <h3 class="shiva-install-title">📲 એપ ડાઉનલોડ & ઇન્સ્ટોલ</h3>
           <p class="shiva-install-desc" id="shiva-install-desc-text">
-            તમારા ફોન પર શિવમ સોસાયટી એપ સરળતાથી ઇન્સ્ટોલ કરવા નીચે આપેલા સ્ટેપ્સ ફોલો કરો.
+            તમારા ફોન પર Kutumhome ઇન્સ્ટોલ કરવા માટે નીચે આપેલા સ્ટેપ્સ અનુસરો.
           </p>
 
           <div id="shiva-modal-action-box" style="margin-bottom:16px;">
@@ -327,7 +327,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     bar.innerHTML = `
       <div class="pwa-install-bar-text">
         <span style="font-size:20px;filter:drop-shadow(0 0 6px #fbbf24);">🔱</span>
-        <span><strong>SHIVAM App</strong> મોબાઇલ પર Install કરો (Direct Download)</span>
+        <span><strong>Kutumhome App</strong> મોબાઇલ પર Install કરો (Install on your device)</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <button type="button" id="pwa-bar-install-btn" class="pwa-install-btn">
