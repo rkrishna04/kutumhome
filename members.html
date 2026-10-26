@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#060913"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Shivam Society"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
+<link rel="icon" type="image/png" sizes="96x96"  href="icons/icon-96.png"/>
+<title>Members — SHIVAM DUPLEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/tables.css"/>
+<link rel="stylesheet" href="css/forms.css"/>
+<link rel="stylesheet" href="css/shiva-theme.css"/>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+<script src="js/print.js"></script>
+<script src="js/pwa.js"></script>
+<script src="js/app.js"></script>
+<style>
+  .tenant-section-header{background:linear-gradient(90deg,#fff3e0,transparent);border-left:3px solid #ff8f00;padding:10px 14px;margin:16px 0 12px;border-radius:0 8px 8px 0;display:flex;align-items:center;gap:8px;}
+  .tenant-section-header .ts-label{font-size:13px;font-weight:700;color:#e65100;}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="brand-icon">🏘</div><div class="brand-text"><h1>SHIVAM DUPLEX</h1><p>Society Management</p></div></div>
+  <nav>
+    <span class="nav-section-label">Portal</span>
+    <a href="index.html"       class="nav-link"><span class="nav-icon">🌐</span> Society Homepage</a>
+    <a href="dashboard.html"   class="nav-link"><span class="nav-icon">📊</span> Admin Dashboard</a>
+    <a href="members.html"     class="nav-link active"><span class="nav-icon">👥</span> Members Directory</a>
+    <span class="nav-section-label">Finance</span>
+    <a href="maintenance.html" class="nav-link"><span class="nav-icon">🧾</span> Maintenance Bills</a>
+    <a href="payments.html"    class="nav-link"><span class="nav-icon">💳</span> Payments</a>
+    <a href="expenses.html"    class="nav-link"><span class="nav-icon">💸</span> Expenses</a>
+    <a href="funds.html"       class="nav-link"><span class="nav-icon">🏦</span> Fund Management</a>
+    <span class="nav-section-label">Community</span>
+    <a href="events.html"      class="nav-link"><span class="nav-icon">🎉</span> Events</a>
+    <a href="notices.html"     class="nav-link"><span class="nav-icon">📢</span> Notice Board</a>
+    <span class="nav-section-label">Reports</span>
+    <a href="reports.html"     class="nav-link"><span class="nav-icon">📥</span> Reports &amp; Exports</a>
+    <span class="nav-section-label">Resident</span>
+    <a href="resident.html"    class="nav-link"><span class="nav-icon">🏠</span> Resident Portal</a>
+    <span class="nav-section-label">Mobile App</span>
+    <a href="#" class="nav-link btn-install-app" style="color:#a5b4fc;"><span class="nav-icon">📲</span> Install App</a>
+  </nav>
+  <div class="sidebar-footer"><strong>SHIVAM DUPLEX</strong> v2.0</div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<div class="main-content">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+      <div><div class="topbar-title">👥 Members</div><div class="topbar-sub">Flat owners, tenants &amp; directory</div></div>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-outline btn-sm btn-install-app" style="color:#a5b4fc;border-color:rgba(129,140,248,0.4);">📲 Install App</button>
+      <button class="btn btn-outline btn-sm" id="btn-export-members">📥 Export Excel</button>
+      <button class="btn btn-accent" id="btn-add-member">➕ Add Member</button>
+    </div>
+  </header>
+  <main class="page-content">
+    <div class="card">
+      <div class="card-header"><div class="card-title">🏠 Member Directory <span class="record-count" id="member-count">0</span></div></div>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="search" id="search" class="search-input" placeholder="Search flat, name, contact…"/></div>
+        <select id="filter-wing"   class="filter-select">
+          <option value="">All Lines (તમામ શેરીઓ)</option>
+          <option value="line-1">લાઈન ૧ (ઉત્તર શેરી / D 01-08)</option>
+          <option value="line-2">લાઈન ૨ (પશ્ચિમ શેરી ૧ / D 09-16)</option>
+          <option value="line-3">લાઈન ૩ (પશ્ચિમ શેરી ૨ / D 17-24)</option>
+          <option value="line-4">લાઈન ૪ (મધ્ય શેરી / D 25-32)</option>
+          <option value="line-5">લાઈન ૫ (પાર્ક શેરી / D 33-40)</option>
+        </select>
+        <select id="filter-designation" class="filter-select">
+          <option value="">All Designations (તમામ હોદ્દા)</option>
+          <option value="પ્રમુખ">👑 પ્રમુખ (Chairman)</option>
+          <option value="ઉપ-પ્રમુખ">🤝 ઉપ-પ્રમુખ (Vice-Chairman)</option>
+          <option value="મંત્રી">📋 મંત્રી (Secretary)</option>
+          <option value="ખજાનચી">🏦 ખજાનચી (Treasurer)</option>
+          <option value="કારોબારી">🏛 કારોબારી સભ્યો (Committee)</option>
+          <option value="ઘર માલિક">🏡 ઘર માલિક (House Owner)</option>
+          <option value="ભાડુઆત">🔑 ભાડુઆત (Tenant)</option>
+        </select>
+        <select id="filter-status" class="filter-select"><option value="">All Status</option><option>Active</option><option>Inactive</option><option>Vacated</option></select>
+        <select id="filter-type"   class="filter-select"><option value="">All Types</option><option>Owner</option><option>Tenant</option></select>
+      </div>
+      <div id="loader" class="spinner-wrap" style="display:none;"><div class="spinner"></div></div>
+      <div class="table-wrap">
+        <table><thead><tr>
+          <th>Flat No</th><th>Wing</th><th>હોદ્દો / Designation</th><th class="col-dept">Owner / Resident</th>
+          <th>Contact</th><th>Maint/Mo</th><th class="col-slot">Parking</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody></table>
+      </div>
+      <div class="pagin-wrap"><div class="pagin-info" id="pagin-info"></div><div class="pagin-controls" id="pagination"></div></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal with Tenant Section -->
+<div class="modal-overlay hidden" id="modal">
+  <div class="modal" style="max-width:700px;">
+    <div class="modal-header"><div class="modal-title" id="modal-title">Add Member</div><button class="modal-close" id="modal-close">✕</button></div>
+    <div class="modal-body">
+      <form id="member-form" novalidate>
+        <!-- Owner Info -->
+        <div style="font-size:12px;font-weight:700;color:#1a237e;letter-spacing:0.5px;margin-bottom:10px;text-transform:uppercase;">👤 Owner / Primary Resident</div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Duplex House Number <span class="req">*</span></label><input id="flatNumber" class="form-control" placeholder="e.g. 02, 14, 21, 35"/></div>
+          <div class="form-group"><label class="form-label">Society Line / શેરી <span class="req">*</span></label><select id="wing" class="form-control"><option value="">Select Line</option><option value="Line 1">લાઈન ૧ (Line 1 / D 01-08)</option><option value="Line 2">લાઈન ૨ (Line 2 / D 09-16)</option><option value="Line 3">લાઈન ૩ (Line 3 / D 17-24)</option><option value="Line 4">લાઈન ૪ (Line 4 / D 25-32)</option><option value="Line 5">લાઈન ૫ (Line 5 / D 33-40)</option><option value="Main">Main Society</option></select></div>
+          <div class="form-group">
+            <label class="form-label">સોસાયટી હોદ્દો / Designation <span class="req">*</span></label>
+            <select id="designation" class="form-control">
+              <option value="પ્રમુખ (Chairman)">👑 ૧ પ્રમુખ (Chairman / President) — મુખ્ય વડા</option>
+              <option value="ઉપ-પ્રમુખ (Vice-Chairman)">🤝 ૧ ઉપ-પ્રમુખ (Vice-Chairman) — વૈકલ્પિક</option>
+              <option value="મંત્રી (Secretary)">📋 ૧ મંત્રી (Secretary) — વહીવટ &amp; નોટિસ</option>
+              <option value="ખજાનચી (Treasurer)">🏦 ૧ ખજાનચી (Treasurer) — હિસાબ &amp; બેંક</option>
+              <option value="કારોબારી સભ્ય - પાણી પુરવઠો">💧 કારોબારી સભ્ય — પાણી પુરવઠો</option>
+              <option value="કારોબારી સભ્ય - સિક્યુરિટી &amp; ગેટ">🛡️ કારોબારી સભ્ય — સિક્યુરિટી &amp; ગેટ</option>
+              <option value="કારોબારી સભ્ય - સ્વચ્છતા &amp; સફાઈ">🧹 કારોબારી સભ્ય — સ્વચ્છતા &amp; સફાઈ</option>
+              <option value="કારોબારી સભ્ય - લાઈટો &amp; પાવર">💡 કારોબારી સભ્ય — લાઈટો &amp; પાવર</option>
+              <option value="કારોબારી સભ્ય - તહેવાર ઉજવણી">🌺 કારોબારી સભ્ય — તહેવાર ઉજવણી</option>
+              <option value="કારોબારી સભ્ય - પાર્કિંગ શિસ્ત">🚗 કારોબારી સભ્ય — પાર્કિંગ શિસ્ત</option>
+              <option value="કારોબારી સભ્ય - બગીચો &amp; પર્યાવરણ">🌳 કારોબારી સભ્ય — બગીચો &amp; પર્યાવરણ</option>
+              <option value="કારોબારી સભ્ય - ૨૦-ઘર વિવાદ ક્લસ્ટર ૧">⚖️ કારોબારી સભ્ય — ૨૦-ઘર વિવાદ (૧-૨૦)</option>
+              <option value="કારોબારી સભ્ય - ૨૦-ઘર વિવાદ ક્લસ્ટર ૨">⚖️ કારોબારી સભ્ય — ૨૦-ઘર વિવાદ (૨૧-૪૦)</option>
+              <option value="ઘર માલિક (House Owner)" selected>🏡 ઘર માલિક (House Owner)</option>
+              <option value="ભાડુઆત (Tenant)">🔑 ભાડુઆત (Tenant)</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Owner Full Name <span class="req">*</span></label><input id="ownerName" class="form-control" placeholder="Full name"/></div>
+          <div class="form-group"><label class="form-label">Contact Number <span class="req">*</span></label><input id="contactNumber" class="form-control" placeholder="10-digit mobile"/></div>
+          <div class="form-group"><label class="form-label">Email</label><input id="email" class="form-control" type="email" placeholder="email@example.com"/></div>
+          <div class="form-group"><label class="form-label">Parking Slot</label><input id="parkingSlot" class="form-control" placeholder="P-01"/></div>
+          <div class="form-group"><label class="form-label">🚗 Car (Name &amp; Reg No)</label><input id="carNumber" class="form-control" placeholder="e.g. Swift - GJ06AB1234"/></div>
+          <div class="form-group"><label class="form-label">🛵 Two-Wheeler (Bike No)</label><input id="bikeNumber" class="form-control" placeholder="e.g. Activa - GJ06CD5678"/></div>
+          <div class="form-group">
+            <label class="form-label">Assigned Committee Incharge</label>
+            <select id="assignedCommittee" class="form-control">
+              <option value="Cluster 1 - Rajeshbhai Patel (1-20)">Cluster 1 (1–20) — Rajeshbhai Patel</option>
+              <option value="Cluster 2 - Sureshbhai Shah (21-40)">Cluster 2 (21–40) — Sureshbhai Shah</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Move-in Date</label><input id="moveInDate" class="form-control" type="date"/></div>
+          <div class="form-group"><label class="form-label">Member Type</label><select id="memberType" class="form-control"><option>Owner</option><option>Tenant</option></select></div>
+          <div class="form-group"><label class="form-label">Status</label><select id="status" class="form-control"><option>Active</option><option>Inactive</option><option>Vacated</option></select></div>
+          <div class="form-group">
+            <label class="form-label">Maintenance Amount</label>
+            <div class="input-pfx-wrap"><span class="input-pfx">₹</span><input id="maintenanceAmount" class="form-control" type="number" min="0" placeholder="600"/></div>
+            <div style="font-size:11px;color:#888;margin-top:4px;">Default: ₹600/month</div>
+          </div>
+        </div>
+        <!-- Is Rented? -->
+        <div style="display:flex;align-items:center;gap:10px;margin:14px 0 10px;padding:10px 14px;background:#f7f9fc;border-radius:8px;border:1px solid #e0e0e0;">
+          <input type="checkbox" id="hasTenant" style="width:16px;height:16px;cursor:pointer;accent-color:#e65100;"/>
+          <label for="hasTenant" style="font-size:13.5px;font-weight:600;cursor:pointer;color:#e65100;">🔑 This house is currently rented / on lease (add tenant details)</label>
+        </div>
+        <!-- Tenant Section (hidden by default) -->
+        <div id="tenant-section" style="display:none;">
+          <div class="tenant-section-header"><span>🔑</span><span class="ts-label">Tenant / Renter Information (KYC)</span></div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Tenant Full Name <span class="req">*</span></label><input id="tenantName" class="form-control" placeholder="Tenant's full name"/></div>
+            <div class="form-group"><label class="form-label">Tenant Contact <span class="req">*</span></label><input id="tenantContact" class="form-control" placeholder="Tenant's mobile"/></div>
+            <div class="form-group"><label class="form-label">Tenant Email</label><input id="tenantEmail" class="form-control" type="email" placeholder="tenant@email.com"/></div>
+            <div class="form-group"><label class="form-label">Aadhar / ID Proof No.</label><input id="tenantAadhar" class="form-control" placeholder="Aadhar / Voter ID / PAN"/></div>
+            <div class="form-group"><label class="form-label">PAN Card No.</label><input id="tenantPan" class="form-control" placeholder="PAN Card Number"/></div>
+            <div class="form-group"><label class="form-label">Occupation / Job</label><input id="tenantJob" class="form-control" placeholder="e.g. Software Engineer, Business"/></div>
+            <div class="form-group"><label class="form-label">Family Members Count</label><input id="tenantFamilyCount" class="form-control" type="number" min="1" placeholder="e.g. 4"/></div>
+            <div class="form-group"><label class="form-label">Rent Start Date</label><input id="tenantRentStart" class="form-control" type="date"/></div>
+            <div class="form-group"><label class="form-label">Rent End Date (Agreement)</label><input id="tenantRentEnd" class="form-control" type="date"/></div>
+            <div class="form-group"><label class="form-label">Monthly Rent (₹)</label><div class="input-pfx-wrap"><span class="input-pfx">₹</span><input id="tenantRent" class="form-control" type="number" min="0" placeholder="Rent amount"/></div></div>
+            <div class="form-group"><label class="form-label">Tenant Login PIN</label><input id="tenantPin" class="form-control" placeholder="e.g. 1234"/></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" id="btn-cancel">Cancel</button><button class="btn btn-primary" id="btn-save-member">💾 Save Member</button></div>
+  </div>
+</div>
+<div class="toast-container" id="toast-container"></div>
+</body>
+</html>
+
+
