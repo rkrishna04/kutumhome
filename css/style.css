@@ -1868,3 +1868,144 @@ html[data-ui-style="typography"] body :is(button,.btn,[role="button"]){border-ra
 html[data-ui-style="typography"][data-color-mode="dark"] body{background:#0e1114!important;color:#e9edf0!important}
 html[data-ui-style="typography"][data-color-mode="dark"] body :is(.card,.panel,.stat-card,.table-container,.content-card,.modal-content){background:transparent!important;border-color:#34414a!important}
 html[data-ui-style="typography"][data-color-mode="dark"] body :is(h1,h2,h3,h4,.card-title){color:#f4f7f8!important}
+
+
+/* ============================================================
+   Kutumhome Interaction Polish — tactile buttons, cards & controls
+   Lightweight CSS-only motion; honours reduced-motion preferences.
+   ============================================================ */
+:root {
+  --kh-motion-fast: 160ms;
+  --kh-motion-base: 240ms;
+  --kh-ease: cubic-bezier(.2,.75,.25,1);
+  --kh-focus-ring: 0 0 0 4px rgba(37,99,89,.18);
+}
+html { scroll-behavior: smooth; }
+body :is(button,.btn,[role="button"],a.button,.nav-btn-resident,.nav-btn-admin,.hero-btn-primary,.hero-btn-secondary,.vhc-search-btn,.quick-action-btn,.copy-pill-btn,.btn-install-app) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: transform var(--kh-motion-base) var(--kh-ease),
+              box-shadow var(--kh-motion-base) var(--kh-ease),
+              background-color var(--kh-motion-fast) ease,
+              border-color var(--kh-motion-fast) ease,
+              color var(--kh-motion-fast) ease,
+              filter var(--kh-motion-fast) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+body :is(button,.btn,[role="button"],a.button,.nav-btn-resident,.nav-btn-admin,.hero-btn-primary,.hero-btn-secondary,.vhc-search-btn,.quick-action-btn,.copy-pill-btn,.btn-install-app):not(:disabled):not([aria-disabled="true"]):hover {
+  transform: translateY(-2px);
+  filter: saturate(1.08);
+}
+body :is(button,.btn,[role="button"],a.button,.nav-btn-resident,.nav-btn-admin,.hero-btn-primary,.hero-btn-secondary,.vhc-search-btn,.quick-action-btn,.copy-pill-btn,.btn-install-app):not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(1px) scale(.985);
+  filter: saturate(.96);
+  transition-duration: 80ms;
+}
+body :is(button,.btn,[role="button"],a.button,.nav-btn-resident,.nav-btn-admin,.hero-btn-primary,.hero-btn-secondary,.vhc-search-btn,.quick-action-btn,.copy-pill-btn,.btn-install-app):focus-visible {
+  outline: 3px solid #4c9d8b;
+  outline-offset: 3px;
+  box-shadow: var(--kh-focus-ring);
+}
+body :is(button,.btn,.nav-btn-resident,.hero-btn-primary,.vhc-search-btn)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg,transparent 0%,rgba(255,255,255,.18) 42%,rgba(255,255,255,.4) 50%,transparent 58%);
+  transform: translateX(-130%);
+  transition: transform 560ms var(--kh-ease);
+  z-index: -1;
+}
+body :is(button,.btn,.nav-btn-resident,.hero-btn-primary,.vhc-search-btn):hover::after {
+  transform: translateX(130%);
+}
+body :is(.card,.panel,.stat-card,.stat-box-modern,.feature-card,.feature-item,.content-card,.table-container,.table-wrap,.vehicle-hero-card,.faq-item,.comm-card,.hierarchy-card-president,.hierarchy-card-owners,.bank-qr-card,.member-card,.settings-card) {
+  transition: transform 260ms var(--kh-ease),
+              box-shadow 260ms var(--kh-ease),
+              border-color 200ms ease,
+              background-color 200ms ease;
+  transform: translateZ(0);
+}
+body :is(.card,.panel,.stat-card,.stat-box-modern,.feature-card,.feature-item,.content-card,.table-container,.table-wrap,.vehicle-hero-card,.faq-item,.comm-card,.hierarchy-card-president,.hierarchy-card-owners,.bank-qr-card,.member-card,.settings-card):hover {
+  transform: translateY(-3px);
+  border-color: rgba(37,99,89,.32);
+  box-shadow: 0 14px 32px rgba(15,35,45,.10);
+}
+body :is(input,select,textarea) {
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+body :is(input,select,textarea):focus {
+  outline: none;
+  border-color: #3b8275 !important;
+  box-shadow: 0 0 0 3px rgba(59,130,117,.15) !important;
+}
+body a:not(.btn):not(.hero-btn-primary):not(.hero-btn-secondary):not(.nav-btn-resident):not(.nav-btn-admin) {
+  text-underline-offset: .22em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+body :is(.kh-style-choice,.kh-appearance-mode-row button,.kh-appearance-close) {
+  transition: transform 180ms var(--kh-ease), box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+body .kh-style-choice:hover { transform: translateX(3px); }
+body .kh-appearance-trigger {
+  box-shadow: 0 8px 24px rgba(15,35,45,.18);
+  animation: kh-gentle-float 4s ease-in-out infinite;
+}
+body .kh-appearance-trigger:hover { box-shadow: 0 12px 30px rgba(15,35,45,.25); }
+@keyframes kh-gentle-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+/* Style-specific interaction language */
+html[data-ui-style="glass"] body :is(button,.btn,.card,.panel,.stat-card,.feature-card,.content-card) {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+html[data-ui-style="neumorphism"] body :is(button,.btn,[role="button"]) {
+  box-shadow: 5px 5px 10px #c9cfd6,-4px -4px 9px #fff;
+}
+html[data-ui-style="neumorphism"] body :is(button,.btn,[role="button"]):active {
+  box-shadow: inset 3px 3px 7px #c9cfd6,inset -3px -3px 7px #fff;
+}
+html[data-ui-style="brutalism"] body :is(button,.btn,[role="button"]):hover,
+html[data-ui-style="neo-brutalism"] body :is(button,.btn,[role="button"]):hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 6px 6px 0 #171717 !important;
+}
+html[data-ui-style="brutalism"] body :is(button,.btn,[role="button"]):active,
+html[data-ui-style="neo-brutalism"] body :is(button,.btn,[role="button"]):active {
+  transform: translate(2px,2px);
+  box-shadow: 1px 1px 0 #171717 !important;
+}
+html[data-ui-style="neo-brutalism"] body :is(.card,.panel,.stat-card,.feature-card,.content-card):hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 8px 8px 0 #171717 !important;
+}
+html[data-color-mode="dark"] body :is(.card,.panel,.stat-card,.stat-box-modern,.feature-card,.feature-item,.content-card,.table-container,.table-wrap,.vehicle-hero-card,.faq-item,.comm-card,.hierarchy-card-president,.hierarchy-card-owners,.bank-qr-card,.member-card,.settings-card):hover {
+  box-shadow: 0 14px 32px rgba(0,0,0,.28);
+}
+html[data-ui-style="neumorphism"][data-color-mode="dark"] body :is(button,.btn,[role="button"]) {
+  box-shadow: 5px 5px 10px #0e1318,-4px -4px 9px #242e39;
+}
+html[data-ui-style="neumorphism"][data-color-mode="dark"] body :is(button,.btn,[role="button"]):active {
+  box-shadow: inset 3px 3px 7px #0e1318,inset -3px -3px 7px #242e39;
+}
+@media (hover:none) {
+  body :is(.card,.panel,.stat-card,.stat-box-modern,.feature-card,.feature-item,.content-card,.table-container,.table-wrap,.vehicle-hero-card,.faq-item,.comm-card,.hierarchy-card-president,.hierarchy-card-owners,.bank-qr-card,.member-card,.settings-card):hover {
+    transform: none;
+  }
+  body :is(button,.btn,[role="button"],a.button,.nav-btn-resident,.nav-btn-admin,.hero-btn-primary,.hero-btn-secondary,.vhc-search-btn,.quick-action-btn,.copy-pill-btn,.btn-install-app):hover {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body *, body *::before, body *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
