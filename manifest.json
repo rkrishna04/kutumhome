@@ -1,17 +1,25 @@
 {
-  "name": "SHIVAM DUPLEX Society",
-  "short_name": "SHIVAM",
-  "description": "SHIVAM DUPLEX Society Management System - Maintenance, Payments, Members & Resident Portal",
-  "id": "shivam-duplex-society-app",
-  "start_url": "index.html",
+  "name": "Kutumhome Society",
+  "short_name": "Kutumhome",
+  "description": "Kutumhome society management: maintenance bills, payments, members and resident portal.",
+  "id": "kutumhome-society-app",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
-  "background_color": "#060913",
-  "theme_color": "#060913",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#f6f8fa",
+  "theme_color": "#256359",
   "orientation": "portrait-primary",
   "lang": "en-IN",
-  "categories": ["utilities", "finance", "productivity"],
+  "categories": [
+    "utilities",
+    "finance",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "icons/icon-72.png",
@@ -79,19 +87,34 @@
       "name": "Dashboard",
       "short_name": "Dashboard",
       "url": "index.html",
-      "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Maintenance Bills",
       "short_name": "Bills",
       "url": "maintenance.html",
-      "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Resident Portal",
       "short_name": "Resident",
       "url": "resident.html",
-      "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ]
 }
