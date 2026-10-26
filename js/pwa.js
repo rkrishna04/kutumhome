@@ -434,6 +434,101 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   }
 
+
+  // 16. User-selectable UI appearance (independent style + light/dark mode)
+  function initUiPreferences() {
+    const styleOptions = [
+      { id: 'material', label: 'Material', note: 'Clean surfaces, clear hierarchy' },
+      { id: 'glass', label: 'Glassmorphism', note: 'Translucent layered surfaces' },
+      { id: 'neumorphism', label: 'Neumorphism', note: 'Soft raised and inset surfaces' },
+      { id: 'brutalism', label: 'Brutalism', note: 'Raw, editorial, high contrast' },
+      { id: 'neo-brutalism', label: 'Neo-Brutalism', note: 'Bold borders and playful blocks' },
+      { id: 'typography', label: 'Typography-centric', note: 'Type-led, spacious and minimal' }
+    ];
+    const storage = {
+      style: 'kutumhome-ui-style',
+      mode: 'kutumhome-color-mode'
+    };
+    const allowed = styleOptions.map((item) => item.id);
+    const safeGet = (key, fallback) => {
+      try { const value = localStorage.getItem(key); return value || fallback; }
+      catch (error) { return fallback; }
+    };
+    const safeSet = (key, value) => {
+      try { localStorage.setItem(key, value); } catch (error) {}
+    };
+    const apply = (style, mode) => {
+      const nextStyle = allowed.includes(style) ? style : 'material';
+      const nextMode = mode === 'dark' ? 'dark' : 'light';
+      document.documentElement.dataset.uiStyle = nextStyle;
+      document.documentElement.dataset.colorMode = nextMode;
+      document.documentElement.style.colorScheme = nextMode;
+      safeSet(storage.style, nextStyle);
+      safeSet(storage.mode, nextMode);
+      document.querySelectorAll('[data-ui-style-choice]').forEach((button) => {
+        const selected = button.dataset.uiStyleChoice === nextStyle;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('is-selected', selected);
+      });
+      document.querySelectorAll('[data-ui-mode-choice]').forEach((button) => {
+        const selected = button.dataset.uiModeChoice === nextMode;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('is-selected', selected);
+      });
+    };
+    // Apply saved preferences before the panel is opened.
+    const initialStyle = safeGet(storage.style, 'material');
+    const initialMode = safeGet(storage.mode, 'light');
+    document.documentElement.dataset.uiStyle = allowed.includes(initialStyle) ? initialStyle : 'material';
+    document.documentElement.dataset.colorMode = initialMode === 'dark' ? 'dark' : 'light';
+    document.documentElement.style.colorScheme = initialMode === 'dark' ? 'dark' : 'light';
+
+    if (document.getElementById('kutumhome-appearance')) return;
+    const root = document.createElement('div');
+    root.id = 'kutumhome-appearance';
+    root.innerHTML = `
+      <button type="button" class="kh-appearance-trigger" aria-expanded="false" aria-controls="kh-appearance-panel" aria-label="Appearance settings" title="Customize appearance">
+        <span aria-hidden="true">◐</span><span class="kh-appearance-trigger-label">Appearance</span>
+      </button>
+      <section id="kh-appearance-panel" class="kh-appearance-panel" aria-label="Appearance settings" hidden>
+        <div class="kh-appearance-heading">
+          <div><strong>Make it yours</strong><p>Choose a look for Kutumhome</p></div>
+          <button type="button" class="kh-appearance-close" aria-label="Close appearance settings">×</button>
+        </div>
+        <div class="kh-appearance-mode-label">Colour mode</div>
+        <div class="kh-appearance-mode-row" role="group" aria-label="Colour mode">
+          <button type="button" data-ui-mode-choice="light">☀ Light</button>
+          <button type="button" data-ui-mode-choice="dark">☾ Dark</button>
+        </div>
+        <div class="kh-appearance-mode-label kh-style-label">Interface style</div>
+        <div class="kh-appearance-style-list" role="group" aria-label="Interface style">
+          ${styleOptions.map((item) => `<button type="button" class="kh-style-choice" data-ui-style-choice="${item.id}">
+            <span class="kh-style-swatch kh-swatch-${item.id}" aria-hidden="true"></span>
+            <span class="kh-style-copy"><strong>${item.label}</strong><small>${item.note}</small></span>
+            <span class="kh-style-check" aria-hidden="true">✓</span>
+          </button>`).join('')}
+        </div>
+        <p class="kh-appearance-footnote">Saved on this device. This changes the visual theme, not your account or permissions.</p>
+      </section>`;
+    document.body.appendChild(root);
+    const trigger = root.querySelector('.kh-appearance-trigger');
+    const panel = root.querySelector('.kh-appearance-panel');
+    const close = () => { panel.hidden = true; trigger.setAttribute('aria-expanded', 'false'); };
+    trigger.addEventListener('click', () => {
+      panel.hidden = !panel.hidden;
+      trigger.setAttribute('aria-expanded', String(!panel.hidden));
+    });
+    root.querySelector('.kh-appearance-close').addEventListener('click', close);
+    root.querySelectorAll('[data-ui-style-choice]').forEach((button) => {
+      button.addEventListener('click', () => apply(button.dataset.uiStyleChoice, document.documentElement.dataset.colorMode));
+    });
+    root.querySelectorAll('[data-ui-mode-choice]').forEach((button) => {
+      button.addEventListener('click', () => apply(document.documentElement.dataset.uiStyle, button.dataset.uiModeChoice));
+    });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+    apply(document.documentElement.dataset.uiStyle, document.documentElement.dataset.colorMode);
+  }
+
   // 15. DOM Ready Bootstrap
   document.addEventListener('DOMContentLoaded', () => {
     // Failsafe: Guarantee all modals without explicit .show class start strictly hidden
@@ -442,6 +537,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
       m.style.setProperty('display', 'none', 'important');
     });
 
+    initUiPreferences();
     inject3DShivaLoader();
     checkInAppBrowser();
     upgradeBrandIcon();
