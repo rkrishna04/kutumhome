@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#174d40">
-<meta name="description" content="Simple resident portal for Shivam Duplex Society.">
-<title>Shivam Duplex Society | Resident Portal</title>
+<meta name="description" content="A clear, private portal for residents and society operations.">
+<title>Kutumhome Society | Resident Portal</title>
 <style>
 :root{--green:#174d40;--green2:#246b58;--mint:#e9f4ee;--cream:#f7f8f4;--ink:#1d302a;--muted:#687970;--line:#dfe7e1;--gold:#d6ad58;--white:#fff;--red:#a93636;--shadow:0 10px 30px #183d2d0b}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button,a{touch-action:manipulation}a{color:inherit;text-decoration:none}button{cursor:pointer}.wrap{width:min(1080px,calc(100% - 32px));margin:auto}
@@ -16,11 +16,39 @@ section{padding:26px 0 36px}.sectionHead{display:flex;align-items:end;justify-co
 footer{margin-top:35px;background:#143d34;color:white;padding:30px 0}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#c6d9d0;font-size:13px;margin:6px 0}.foot a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:760px){.hero{padding:38px 0 22px}.heroGrid,.two{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks a:not(.btn){display:none}.welcome{min-height:220px}.sectionHead{align-items:start;flex-direction:column}}@media(max-width:500px){.wrap{width:min(100% - 24px,1080px)}.nav{min-height:62px}.brand{font-size:13px}.mark{width:36px;height:36px}.navlinks{gap:8px}.navlinks .btn{padding:9px 10px}.grid,.featureList{grid-template-columns:1fr}.hero{padding-top:32px}.lead{font-size:16px}.card,.panel{padding:17px}.sectionHead .btn{width:100%}}
 </style>
+
+<style>
+/* Kutumhome portal: premium, quiet, accessible */
+:root{--green:#256359;--green2:#194b44;--mint:#e8f3f0;--cream:#f6f8fa;--ink:#172b4d;--muted:#64748b;--line:#e2e8f0;--gold:#b88a4a;--red:#b42318;--shadow:0 3px 12px rgba(15,23,42,.045)}
+body{background:#f6f8fa;color:#172b4d;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+header{background:rgba(255,255,255,.96);backdrop-filter:none;border-bottom:1px solid #e2e8f0}
+.brand{letter-spacing:-.025em;font-weight:800}.mark{background:#256359;border-radius:10px;box-shadow:none}
+.navlinks{color:#475569;gap:16px}.btn{border-radius:8px;border-color:#d6dee7;box-shadow:none;font-weight:650;transition:background .16s ease,border-color .16s ease}
+.btn.primary{background:#256359;border-color:#256359}.btn.primary:hover{background:#194b44}
+.hero{padding-top:clamp(38px,6vw,72px)}.heroGrid{grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:28px}
+.eyebrow{letter-spacing:.11em;color:#256359}
+h1{font-size:clamp(36px,5.1vw,62px);font-weight:760;letter-spacing:-.055em;line-height:1.04}
+h2{font-weight:720;letter-spacing:-.035em}h3{font-weight:700;letter-spacing:-.02em}
+.lead{font-size:17px;line-height:1.75;color:#526176}
+.welcome{border-radius:16px;background:#194b44;box-shadow:0 10px 28px rgba(25,75,68,.12);padding:28px}
+.welcome .sun{display:none}.status{border-radius:7px;background:#ffffff14}
+section{padding:32px 0 40px}.sectionHead{margin-bottom:20px}
+.card,.feature,.panel{border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.035);border-color:#e2e8f0}
+.card{padding:22px}.icon{border-radius:9px;background:#e8f3f0}
+.tag{border-radius:6px;background:#f1f5f9;color:#475569;font-weight:700}
+.field input,.field select,.field textarea{border-radius:8px;border-color:#cbd5e1}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:#256359;box-shadow:0 0 0 3px #2563591c}
+.account{border-radius:9px;background:#e8f3f0}.issue{border-radius:10px}
+footer{background:#142f2b}
+@media(max-width:760px){.heroGrid{grid-template-columns:1fr}.welcome{min-height:210px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+
 </head>
 <body>
-<header><div class="wrap nav"><a class="brand" href="#top"><span class="mark">S</span><span>SHIVAM DUPLEX<small>RESIDENT PORTAL</small></span></a><nav class="navlinks" aria-label="Main navigation"><a href="#services">Services</a><a href="#community">Community</a><a href="#help">Help</a><button class="btn primary" id="loginOpen">Resident login</button></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="#top"><span class="mark">K</span><span>KUTUMHOME<small>RESIDENT PORTAL</small></span></a><nav class="navlinks" aria-label="Main navigation"><a href="#services">Services</a><a href="#community">Community</a><a href="#help">Help</a><button class="btn primary" id="loginOpen">Resident login</button></nav></div></header>
 <main id="top">
-<div class="wrap hero"><div class="heroGrid"><div><div class="eyebrow">One simple place for society life</div><h1>Welcome home to <span style="color:var(--green2)">Shivam Duplex.</span></h1><p class="lead">A clear, friendly place for residents to raise issues, check their requests, and find the society's important services.</p><div class="actions"><a class="btn primary" href="#help">Raise a society issue ↓</a><a class="btn" href="#services">Explore services</a></div><p class="muted small" style="margin-top:18px">Private household information is shown only after you sign in.</p></div><aside class="welcome"><div><div class="sun" aria-hidden="true">☀️</div><div class="status"><span class="dot"></span> Resident services</div><h2 style="margin-top:17px">Your community, made simpler.</h2><p>Use one portal for support and updates. Available features are clearly marked so you know what is live.</p></div><a class="btn" href="#community">About the portal →</a></aside></div></div>
+<div class="wrap hero"><div class="heroGrid"><div><div class="eyebrow">One simple place for society life</div><h1>Welcome home to <span style="color:var(--green2)">Kutumhome.</span></h1><p class="lead">A clear, friendly place for residents to raise issues, check their requests, and find the society's important services.</p><div class="actions"><a class="btn primary" href="#help">Raise a society issue ↓</a><a class="btn" href="#services">Explore services</a></div><p class="muted small" style="margin-top:18px">Private household information is shown only after you sign in.</p></div><aside class="welcome"><div><div class="sun" aria-hidden="true">☀️</div><div class="status"><span class="dot"></span> Resident services</div><h2 style="margin-top:17px">Your community, made simpler.</h2><p>Use one portal for support and updates. Available features are clearly marked so you know what is live.</p></div><a class="btn" href="#community">About the portal →</a></aside></div></div>
 <section id="services"><div class="wrap"><div class="sectionHead"><div><div class="eyebrow">Quick access</div><h2>Society services</h2><div class="muted">Start with the essentials. More services can be added when their workflows are ready.</div></div></div><div class="grid">
 <article class="card"><div class="icon" aria-hidden="true">🛠️</div><h3>Raise an issue</h3><p>Report maintenance or a shared-area problem after signing in. Your house details come from your account.</p><span class="tag">Available after login</span></article>
 <article class="card"><div class="icon" aria-hidden="true">📋</div><h3>My requests</h3><p>Review the issues you have submitted and check their current status.</p><span class="tag">Available after login</span></article>
@@ -40,7 +68,7 @@ footer{margin-top:35px;background:#143d34;color:white;padding:30px 0}.foot{displ
 <div class="panel" id="requestPanel"><h3>My society requests</h3><p class="muted small">Sign in to submit a new issue or view your own requests.</p><div id="accountArea" class="account" hidden><div><strong id="accountName">Signed in</strong><div class="small muted" id="accountMeta"></div></div><button class="btn" id="logoutBtn" type="button">Sign out</button></div><form id="issueForm" hidden><div class="field"><label for="issueCategory">Issue category</label><select id="issueCategory" required><option value="">Choose a category</option><option>Water supply / plumbing</option><option>Electrical / streetlights</option><option>Cleaning / sanitation</option><option>Roads / parking</option><option>Garden / common area</option><option>Security / gate</option><option>Other</option></select></div><div class="field"><label for="issueDescription">Describe the issue</label><textarea id="issueDescription" minlength="5" maxlength="5000" required placeholder="What happened and where? Please do not include passwords or sensitive personal information."></textarea></div><div class="formActions"><button class="btn primary" type="submit">Submit request</button><button class="btn" id="refreshIssues" type="button">Refresh</button></div></form><div id="issuesList" style="margin-top:13px"><div class="empty">Sign in to see your requests.</div></div></div>
 </div></div></section>
 </main>
-<footer><div class="wrap foot"><div><strong>SHIVAM DUPLEX SOCIETY</strong><p>A simple digital helpdesk for the community.</p></div><div><p><a href="/admin.html">Administrator console</a></p><p><a href="/api/health" target="_blank" rel="noreferrer">System health</a></p></div><div><p>Emergency note: this portal does not send emergency alerts.</p><p>For urgent emergencies, contact local emergency services or the society security desk directly.</p></div></div></footer>
+<footer><div class="wrap foot"><div><strong>KUTUMHOME SOCIETY</strong><p>A simple digital helpdesk for the community.</p></div><div><p><a href="/admin.html">Administrator console</a></p><p><a href="/api/health" target="_blank" rel="noreferrer">System health</a></p></div><div><p>Emergency note: this portal does not send emergency alerts.</p><p>For urgent emergencies, contact local emergency services or the society security desk directly.</p></div></div></footer>
 <script>
 const $=id=>document.getElementById(id);
 let signedInUser=null;
