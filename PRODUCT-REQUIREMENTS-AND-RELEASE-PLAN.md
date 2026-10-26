@@ -4,9 +4,9 @@
 Provide one secure, mobile-first society system for 203 duplex houses. Preserve existing features while replacing the inconsistent legacy UI with a calm, readable Premium SaaS interface. UI previews are not proof that persistence, permissions, payments, or notifications work.
 
 ## Decisions required before production data entry
-1. **Maintenance fee conflict:** the requirements mention ₹300/month and also ₹600/month. The existing portal code uses ₹600/month, ₹3,600/6 months and ₹7,200/year. Do not bulk-generate invoices until the society confirms the approved fee schedule. Keep fees configurable by effective date, never duplicated as unrelated hard-coded values.
+1. **Maintenance fee (confirmed):** Society confirmed ₹600/month, ₹3,600/6 months and ₹7,200/year. Keep the fee configurable by effective date and use one shared source of truth; test period calculations before bulk generation.
 2. **House inventory:** requirement says 203 houses. Existing JavaScript comments and committee allocation helpers still reference 40 houses / five groups. Verify the official house-number list and committee-to-house mapping before seeding data.
-3. **Brand:** UI is being rebranded to Kutumhome, but the society itself may still officially be called SHIVAM DUPLEX. Confirm whether public/legal documents should display “SHIVAM DUPLEX Society” or “Kutumhome”.
+3. **Brand (confirmed):** Use “Kutumhome” as the platform/product name and “SHIVAM DUPLEX Society” as the society name on public-facing pages, resident/admin screens, and printable documents.
 4. **Payment details:** QR image, account holder name, bank, account number, IFSC and UPI ID must be supplied and verified by the society. Never fabricate bank details or display an unverified QR.
 5. **Mobile app distribution:** a PWA can offer an install prompt on supported Android browsers and “Add to Home Screen” instructions on iPhone Safari. A web button cannot force-install an iOS app or directly install an Android APK without browser/OS confirmation. True store-distributed native apps require signed Android/iOS builds and Google Play / Apple App Store release accounts.
 
